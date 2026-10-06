@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: nexoraa-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: admin@nexoraa.tech
+      - key: ADMIN_PASSWORD
+        value: nexoraa_admin_2026!
+      - key: MONGODB_URI
+        sync: false
+      - key: CLIENT_URL
+        sync: false
