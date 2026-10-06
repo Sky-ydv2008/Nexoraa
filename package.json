@@ -1,0 +1,21 @@
+{
+  "name": "nexoraa-platform",
+  "version": "1.0.0",
+  "description": "NEXORAA — Production Full-Stack Web Platform & AI Research Lab Hub",
+  "scripts": {
+    "dev:backend": "cd backend && npm start",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "seed": "cd backend && npm run seed"
+  },
+  "keywords": [
+    "nexoraa",
+    "ai",
+    "cybersecurity",
+    "fullstack",
+    "research-lab",
+    "hackathons"
+  ],
+  "author": "Nexoraa Technology Collective",
+  "license": "MIT"
+}

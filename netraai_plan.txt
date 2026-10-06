@@ -1,0 +1,462 @@
+NETRAAI
+NATIONAL-LEVEL HACKATHON
+IMPROVEMENT & EXECUTION PLAN
+From implementation plan to competition-ready prototype
+Three-member team  Six-week suggested roadmap  AI
+validation & demo strategy
+SEE  UNDERSTAND  PREDICT  ALERT  RESPOND
+Purpose
+A practical execution blueprint for turning NetraAI into a working, measurable, privacy-conscious AI-assisted
+crowd-safety prototype. The plan prioritizes a differentiating AI contribution, defensible evaluation, a complete
+response workflow, and a reliable competition demo.
+Important status note
+This document is a proposed plan, not evidence that the system has already been implemented or validated. All performance targets
+are initial engineering goals; report only measurements your team actually obtains.
+
+NETRAAI  |  NATIONAL HACKATHON EXECUTION PLAN
+Page 2
+1. Executive Strategy
+NetraAI should be presented as more than a CCTV dashboard. The strongest competition version detects
+developing crowd-flow anomalies, explains the measurable signals behind a risk alert, experiments with short-term
+forecasting, and helps a human operator coordinate a response.
+Proposed core innovation
+NetraAI Predictive Safety Intelligence combines person tracking, zone-level crowd metrics, temporal changes,
+configurable risk scoring, evidence-backed alerts, and human-verified response coordination.
+The system should help answer:
+●
+ Where is risk increasing?
+ ●
+ Which measurable signals contributed to the risk score?
+ ●
+ Is the situation changing over time?
+ ●
+ What should an operator investigate or do next?
+ 
+Product workflow
+ Stage
+Function
+1. Video input
+Authorized recorded video or permitted camera stream
+2. Vision
+Detection and multi-object tracking
+3. Crowd intelligence
+Density, direction, flow, zone occupancy and temporal features
+4. Risk & forecast
+Explainable risk score, contributing factors and evaluated forecast
+5. Alert & verify
+Evidence-backed incident with human verification
+6. Response
+Assignment, resolution, audit history and evaluation
+Competition positioning
+The differentiator is not simply using a pretrained detector. It is the team's measured contribution: temporal feature
+engineering, explainable risk logic, evaluation against sensible baselines, and integration into a usable safety
+workflow.
+
+NETRAAI  |  NATIONAL HACKATHON EXECUTION PLAN
+Page 3
+2. Differentiating AI Features
+Focus on one strong primary AI contribution, one forecasting experiment, and one complete response workflow.
+Avoid attempting every advanced feature before the MVP is stable.
+Feature A — Crowd-flow anomaly detection (must build)
+Combine tracking with zone-level density, direction consistency, speed changes, and sudden crowd-flow
+disruption. Flag unusual patterns relative to a defined baseline.
+●
+ Measure event-level precision and recall.
+ ●
+ Measure false alerts per evaluated video-hour.
+ ●
+ Measure time from labeled event onset to alert.
+ ●
+ Test normal, crowded, occluded and unusual-flow scenes.
+ 
+Feature B — Explainable risk engine (must build)
+Calculate a configurable risk score from normalized density, flow disruption, detected anomalies, zone constraints
+and recent trends. Display the score with its contributing factors and supporting evidence.
+Feature C — Short-term risk forecasting (research priority)
+Start with persistence and trend-based baselines. Only then test a model such as gradient boosting or a sequential
+model. Use held-out time sequences and compare forecasts against the baseline.
+If suitable labeled time-series data is unavailable, present forecasting as an experiment, not a validated prediction of an actual
+emergency.
+Feature D — Evidence-to-response workflow (must build)
+Every incident should include a timestamp, affected zone, score, contributing signals, evidence snapshot, operator
+verification, assigned responder, and resolution record.
+Recommended implementation stack
+ Component
+Initial implementation
+Potential next step
+Person detection
+Pretrained YOLO-family model
+Fine-tune only if evaluation shows a need
+Tracking
+ByteTrack or evaluated alternative
+Measure tracking continuity and failures
+Crowd metrics
+Count, density proxy, direction and flow
+Camera calibration and improved density estimation
+Anomaly detection
+Explainable rules and temporal features
+Learned anomaly model if data supports it
+Risk score
+Configurable weighted model
+Calibrate using labeled validation data
+Forecasting
+Persistence and trend baselines
+Compare gradient boosting or temporal models
+Incident explanation
+Templates grounded in measured signals
+AI summaries grounded in stored incident records
+Do not train a large model from scratch for the first version. An original contribution can come from feature engineering, risk logic,
+careful evaluation, forecasting experiments, and system integration. Disclose pretrained components clearly.
+
+NETRAAI  |  NATIONAL HACKATHON EXECUTION PLAN
+Page 4
+3. Six-Week Implementation Roadmap
+Assumption: approximately six weeks of consistent work, access to a suitable development machine, and a team
+able to work regularly. This is a planning estimate, not a guaranteed delivery date.
+Week
+Focus
+Key deliverables
+Exit gate
+1
+Foundation
+Git repo, task board, React/Vite, Tailwind, FastAPI,
+PostgreSQL; select test videos; run detector
+A video runs through the detector
+reproducibly
+2
+Vision pipeline
+Tracking, zones, count, density proxy, movement
+direction, timestamped metrics, failure handling
+Consistent metrics from at least one
+test video
+3
+AI core
+Temporal features, configurable risk score, alert
+explanations, labeled evaluation set, density-only
+baseline
+Risk changes for identifiable reasons
+and UI shows them
+4
+Product workflow
+Dashboard, WebSockets, incident creation, operator
+verification, assignment and audit history
+Incident goes from video to resolution
+without database edits
+5
+Validation
+Held-out testing, false-alarm/latency metrics, forecast
+baselines, edge-case tests and fixes
+Repeatable evaluation report with
+limitations
+6
+Competition
+readiness
+Deployment, setup docs, clean-start rehearsal, backup
+recording, pitch and Q&A;
+Reliable complete demo and
+measured results ready
+Schedule rule
+If the deadline is sooner, cut optional features before cutting validation. A smaller reliable system is stronger than
+many unfinished features. Keep integration continuous; do not wait until Week 4 to connect the AI and web
+application.
+
+NETRAAI  |  NATIONAL HACKATHON EXECUTION PLAN
+Page 5
+4. Three-Member Team Responsibilities
+ Role
+Ownership
+Weekly deliverable
+Member 1 — AI/ML
+Engineer
+YOLO and tracking; crowd metrics; anomaly features; risk
+engine; dataset labels; evaluation and forecasting experiments
+Tested AI pipeline with
+reproducible outputs
+Member 2 —
+Backend/Integration
+Engineer
+FastAPI; authentication and roles; PostgreSQL; incidents and
+alerts; WebSockets; deployment and backend tests
+Working APIs and reliable
+incident data flow
+Member 3 —
+Frontend/UX/Demo Lead
+React and Tailwind dashboard; incident details;
+charts/heatmaps; API integration; end-to-end tests; demo and
+documentation
+Functional interface showing the
+whole workflow
+Team integration rules
+●
+ Agree on request/response schemas and event formats in Week 1.
+ ●
+ Integrate a small working slice every week.
+ ●
+ Use Git branches and pull requests.
+ ●
+ Maintain one shared backlog with an owner for every task.
+ ●
+ Reserve at least 20% of the final two weeks for testing, integration and demo preparation.
+ ●
+ Ensure every member can explain the overall architecture and key design choices.
+ 
+Suggested event contract
+Illustrative schema only — values are examples, not measured output.
+{
+  "event_type": "crowd_risk_update",
+  "camera_id": "CAM-01",
+  "zone_id": "ZONE-A",
+  "timestamp": "ISO-8601 timestamp",
+  "risk_score": 72,
+  "risk_factors": {
+    "density": 0.78,
+    "flow_disruption": 0.64
+  },
+  "verification_status": "pending"
+}
+Define score normalization, confidence, timestamps and field meanings consistently before integrating the AI, backend and frontend.
+
+NETRAAI  |  NATIONAL HACKATHON EXECUTION PLAN
+Page 6
+5. Measurable Validation Plan
+Judges should see evidence of what works and where the system fails. Treat every target below as a proposed
+engineering goal, not an achieved result or universal standard.
+Metric
+Measurement
+Initial goal to consider*
+Person detection
+Precision, recall and mAP on labeled frames
+Establish baseline, then improve
+Incident detection
+Event-level precision and recall
+≥ 80% on a defined test set
+False alarms
+False alerts per evaluated video-hour
+Track and reduce against baseline
+Alert latency
+Event onset to dashboard alert; report P50/P95
+P95 under 3 seconds if hardware
+permits
+Crowd counting
+MAE against manual counts on sampled frames
+Establish baseline; target improvement
+Risk usefulness
+Rank labeled risk events against density-only baseline
+Better event ranking than baseline
+Forecasting
+MAE or suitable metric vs persistence baseline
+Improve on held-out sequences
+Workflow reliability
+Successful end-to-end incident test runs
+20/20 as an initial goal
+*Targets must be adjusted to the dataset, hardware, event definitions and hackathon rubric. They are not claimed results or
+established industry thresholds.
+Defensible experiment protocol
+1
+Define events before testing. Specify what qualifies as crowd-flow anomaly, high-density event, or
+ restricted-zone breach.
+2
+Create a labeled evaluation set. Include normal scenes, crowded scenes, unusual movement, occlusion and
+ difficult camera angles. Label event start/end times where possible.
+3
+Split by video or recording session. Avoid random splits of adjacent frames that can leak near-duplicate
+ information across training and test sets.
+4
+Compare with baselines. Compare combined density-and-flow logic with a density-only threshold; compare
+ forecasting with persistence.
+5
+Report failures as well as successes. Include false alarms, missed events, latency, limitations and test
+ conditions. Do not generalize from one carefully selected clip.
+Evaluation dashboard should show
+●
+ Precision, recall, F1 and confusion matrix.
+ ●
+ False alerts per video-hour.
+ ●
+ Alert latency distribution, including P50 and P95.
+ ●
+ Crowd-count error on manually labeled samples.
+ ●
+ Risk-score trends aligned with labeled events.
+ ●
+ Forecast error compared with the baseline.
+ ●
+ Results grouped by scene, camera angle and test condition.
+ 
+NETRAAI  |  NATIONAL HACKATHON EXECUTION PLAN
+Page 7
+6. Architecture and Integration
+Keep the MVP simple enough for three people to maintain. Start with one FastAPI service, a separate AI worker,
+PostgreSQL, and WebSockets. Add Redis when asynchronous event delivery or multiple workers actually require
+it.
+Layer
+Responsibility
+React + Tailwind
+Dashboard, video views, heatmaps, incidents and operator actions
+FastAPI
+APIs, authentication, incident workflow and access control
+Python AI worker
+Detection, tracking, crowd metrics, anomaly detection, risk and forecasting
+PostgreSQL
+Users, cameras, incidents, metrics, response actions and audit history
+WebSockets / optional Redis
+Live event delivery and event distribution
+End-to-end event flow
+Video → AI worker → risk event → FastAPI → WebSocket → dashboard → operator verification → response
+assignment → resolution.
+Privacy and safety safeguards
+●
+ Avoid facial recognition by default and minimize personally identifying information.
+ ●
+ Restrict raw-video access and define evidence retention/deletion rules.
+ ●
+ Use role-based access, secure credentials and audit logs.
+ ●
+ Label recommendations as AI-assisted and require human verification for consequential alerts.
+ ●
+ Use only authorized footage and respect dataset licenses and terms.
+ ●
+ Do not use simulated test incidents to trigger real emergency dispatch.
+ 
+NETRAAI  |  NATIONAL HACKATHON EXECUTION PLAN
+Page 8
+7. Three-Minute Judge Demo
+ Time
+What to show
+Judge takeaway
+0:00–0:20
+Introduce the problem and a normal crowd scene
+A clear real-world need
+0:20–0:55
+Run video; show detections, tracks, zone density and movement
+Working computer vision
+0:55–1:25
+Show anomaly, risk score and contributing evidence; show forecast
+only if evaluated
+Differentiating AI
+1:25–2:00
+Trigger test incident, display real-time alert, verify it as an operator
+Real-time integration
+2:00–2:25
+Assign simulated response team, update status and show audit trail
+Operational usefulness
+2:25–2:50
+Show actual evaluation metrics, baseline comparison and limitations
+Evidence and technical maturity
+Demo resilience checklist
+●
+ Keep a tested video file locally available.
+ ●
+ Preload a known-good model and configuration.
+ ●
+ Verify the demo works without external camera access.
+ ●
+ Prepare an evaluation report if live inference fails.
+ ●
+ Keep a short backup recording of the complete workflow and label it as a recording.
+ ●
+ Rehearse from a clean start and verify all buttons and status transitions.
+ 
+Never make a real emergency call or dispatch an actual responder during a simulated test.
+
+NETRAAI  |  NATIONAL HACKATHON EXECUTION PLAN
+Page 9
+8. Feature Prioritization
+ Must finish
+Build if core works
+Postpone
+Video ingestion and tracking
+Short-term forecasting
+Training a large model from scratch
+Crowd metrics and configurable zones
+Advanced anomaly models
+Complex multi-camera identity tracking
+Explainable risk score
+Interactive geographic heatmaps
+Large-scale production infrastructure
+Live alerts and incident lifecycle
+Grounded AI incident summaries
+Many unvalidated anomaly categories
+Human verification and responder
+assignment
+Additional analytics
+Decorative UI with no workflow value
+Held-out evaluation and reliable demo
+Optional deployment enhancements
+Features that threaten reliability
+9. Judge Pitch Draft
+Title
+NetraAI — See the Risk Before It Escalates
+Problem
+Public spaces can become unsafe when crowd density rises, movement becomes abnormal, or access routes
+become congested. CCTV provides footage, but operators still need to interpret changing conditions and
+coordinate a response.
+Solution
+NetraAI is an AI-assisted crowd-safety and emergency-response platform combining computer vision, multi-object
+tracking, crowd-flow analysis, explainable risk scoring and real-time incident management.
+Differentiation
+Rather than stopping at person detection, NetraAI analyzes changes in crowd behavior, identifies measurable
+warning signals, explains why an alert was raised, and supports a human operator in coordinating the response.
+Evidence
+We evaluate the system against simpler baselines using labeled test videos, detection metrics, false-alert
+measurements and end-to-end latency. We report limitations as well as results.
+Vision
+Turn passive surveillance into explainable, measurable and actionable safety intelligence.
+Before presenting
+Replace any statement about current capabilities or evaluation with wording that accurately reflects what the team
+has built and tested. Do not claim prevention of stampedes or certain prediction of disasters; describe NetraAI as
+an AI-assisted early-warning and response-support system requiring validation before real-world deployment.
+
+NETRAAI  |  NATIONAL HACKATHON EXECUTION PLAN
+Page 10
+10. Competition-Readiness Checklist
+Foundation
+●
+ [ ] Repository, task board and architecture are ready.
+ ●
+ [ ] Baseline AI processes a real video.
+ ●
+ [ ] API contracts are agreed by all three members.
+ 
+Differentiation
+●
+ [ ] Crowd metrics and temporal anomaly logic work.
+ ●
+ [ ] Risk alerts explain their contributing signals.
+ ●
+ [ ] Forecasting is evaluated against a baseline or clearly marked experimental.
+ 
+Product
+●
+ [ ] Dashboard receives live events.
+ ●
+ [ ] Incident can be verified, assigned and resolved.
+ ●
+ [ ] Authentication and privacy controls are implemented.
+ 
+Evidence
+●
+ [ ] Held-out test videos and event labels are prepared.
+ ●
+ [ ] False alarms, recall and latency are measured.
+ ●
+ [ ] Results, limitations and baseline comparisons are documented.
+ 
+Presentation
+●
+ [ ] End-to-end demo succeeds from a clean start.
+ ●
+ [ ] Backup recording and local test video are ready.
+ ●
+ [ ] Each member can explain the architecture and answer technical questions.
+ 
+Final Recommendation
+For a three-person team, make explainable crowd-flow anomaly detection plus the complete emergency-response
+workflow the primary deliverable. Treat forecasting as the research differentiator, but only claim it as validated if it
+beats a sensible baseline on held-out data.
+A credible national-level submission combines meaningful impact, a clear technical contribution,
+measured performance, practical usability and a memorable, reliable demo. This plan improves
+your chances; it cannot guarantee a prize.
+Prepared as a build and execution guide for NetraAI. Adapt priorities to the actual hackathon rules, deadline, hardware, and judging
+rubric.
+
